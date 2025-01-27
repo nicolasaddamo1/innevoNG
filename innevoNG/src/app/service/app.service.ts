@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root', // El servicio estará disponible en toda la aplicación
 })
 export class AppService {
-  private apiUrl = 'http://192.168.1.90:3000'; // Reemplaza con la URL de tu backend
+  private apiUrl = 'http://192.168.1.90:3000/test'; // Reemplaza con la URL de tu backend
 
   constructor(private http: HttpClient) {}
 

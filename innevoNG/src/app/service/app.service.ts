@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root', // El servicio estará disponible en toda la aplicación
+  providedIn: 'root', 
 })
 export class AppService {
-  private apiUrl = 'http://192.168.1.90:3000/test'; // Reemplaza con la URL de tu backend
+  private apiUrl = 'http://localhost:3000'; 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {} 
 
   getMessage(): Observable<string> {
-    return this.http.get(this.apiUrl, { responseType: 'text' }); // Especificamos que queremos texto
+    return this.http.get<string>(`${this.apiUrl}/test`); 
   }
 }

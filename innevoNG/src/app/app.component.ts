@@ -1,27 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from './service/app.service';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  template: `
+    <div>
+      <h1>Mensaje del Backend</h1>
+      <p>{{ mensaje }}</p>
+    </div>
+  `,
+  styles: []
 })
 export class AppComponent implements OnInit {
-  title = 'innevoNG';
-  message: string = 'Cargando mensaje...';
+  mensaje: string = '';
 
-  constructor(private appService: AppService) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.fetchMessage();
+    this.obtenerMensaje();
   }
 
-  fetchMessage(): void {
-    this.appService.getMessage().subscribe({
-      next: (data) => (this.message = data),
-      error: (err) => {
-        console.error('Error al obtener el mensaje:', err);
-        this.message = 'Error al cargar el mensaje.';
-      },
-    });
+  obtenerMensaje(): void {
+    this.http.get<string>('http://localhost:3000/test', { responseType: 'text' as 'json' })
+      .subscribe(
+        (respuesta) => {
+          this.mensaje = respuesta;
+        },
+        (error) => {
+          console.error('Error al obtener el mensaje:', error);
+          this.mensaje = 'No se pudo obtener el mensaje del backend.';
+        }
+      );
   }
 }
